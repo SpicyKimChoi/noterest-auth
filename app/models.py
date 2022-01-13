@@ -3,6 +3,7 @@ from pydantic.main import BaseModel
 class UserRegister(BaseModel):
     email: str = None
     pw: str = None
+    nickname: str = None
 
 
 class Token(BaseModel):

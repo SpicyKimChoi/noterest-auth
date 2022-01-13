@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from starlette.responses import Response
+from starlette.responses import JSONResponse
 
 router = APIRouter()
 
@@ -9,7 +9,7 @@ def ping():
     resp = {
         "status" : "pass"
     }
-    return Response(resp)
+    return JSONResponse(resp)
 
 
 @router.get('/health')
@@ -18,4 +18,4 @@ def health():
     resp = {
         "status" : "pass"
     }
-    return Response(resp)
+    return JSONResponse(resp)

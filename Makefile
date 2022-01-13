@@ -1,6 +1,8 @@
 service:=noterest-auth
 project:=noterest
 
+default: start logs
+
 .PHONY: start
 start:
 	docker-compose -p ${project} up -d

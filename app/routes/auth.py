@@ -17,22 +17,18 @@ router = APIRouter(prefix="/auth")
 @router.post("/register", status_code=201, response_model=Token)
 async def register(reg_info: UserRegister, session: Session = Depends(db.session)):
     """
-    `회원가입 API`\n
-    :param sns_type:
-    :param reg_info:
-    :param session:
-    :return:
+    `회원가입 API`
     """
     is_exist = await is_email_exist(reg_info.email)
 
-    if not reg_info.email or not reg_info.pw:
-        return JSONResponse(status_code=400, content=dict(msg="Email and PW must be provided'"))
+    if not reg_info.email or not reg_info.pw or not reg_info.nickname:
+        return JSONResponse(status_code=400, content=dict(msg="Email and PW, Nickname must be provided'"))
 
     if is_exist:
         return JSONResponse(status_code=400, content=dict(msg="EMAIL_EXISTS"))
 
     hash_pw = bcrypt.hashpw(reg_info.pw.encode("utf-8"), bcrypt.gensalt())
-    new_user = Users.create(session, auto_commit=True, pw=hash_pw, email=reg_info.email)
+    new_user = Users.create(session, auto_commit=True, pw=hash_pw, email=reg_info.email, nickname=reg_info.nickname)
     token = dict(Authorization=f"Bearer {create_access_token(data=UserToken.from_orm(new_user).dict(exclude={'pw'}),)}")
     
     return token

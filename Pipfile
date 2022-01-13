@@ -11,6 +11,7 @@ sqlalchemy = "*"
 gunicorn = "*"
 bcrypt = "*"
 pyjwt = "*"
+alembic = "*"
 
 [dev-packages]
 
