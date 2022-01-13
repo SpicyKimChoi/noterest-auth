@@ -10,7 +10,7 @@ from starlette.responses import JSONResponse
 from app.common.consts import JWT_SECRET, JWT_ALGORITHM
 from app.database.conn import db
 from app.database.schema import Users
-from app.models import Token, UserToken, UserRegister
+from app.models import Token, UserToken, UserRegister, UserLogin
 
 router = APIRouter(prefix="/auth")
 
@@ -35,7 +35,7 @@ async def register(reg_info: UserRegister, session: Session = Depends(db.session
 
 
 @router.post("/login", status_code=200, response_model=Token)
-async def login(user_info: UserRegister):
+async def login(user_info: UserLogin):
     is_exist = await is_email_exist(user_info.email)
 
     if not user_info.email or not user_info.pw:

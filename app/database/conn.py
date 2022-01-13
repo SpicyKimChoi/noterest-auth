@@ -1,16 +1,16 @@
-from fastapi import FastAPI
+# from fastapi import FastAPI
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 class SQLAlchemy:
-    def __init__(self, app: FastAPI = None, **kwargs):
+    def __init__(self, app = None, **kwargs):
         self._engine = None
         self._session = None
         if app is not None:
             self.init_app(app=app, **kwargs)
 
-    def init_app(self, app: FastAPI, **kwargs):
+    def init_app(self, app, **kwargs):
         """ DB 초기화 함수 """
         database_url = kwargs.get("DB_URL")
         pool_recycle = kwargs.setdefault("DB_POOL_RECYCLE", 900)

@@ -6,6 +6,10 @@ class UserRegister(BaseModel):
     nickname: str = None
 
 
+class UserLogin(BaseModel):
+    email: str = None
+    pw: str = None
+
 class Token(BaseModel):
     Authorization: str = None
 

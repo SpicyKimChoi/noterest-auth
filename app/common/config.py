@@ -22,13 +22,6 @@ class Config:
 
 
 @dataclass
-class LocalConfig(Config):
-    TRUSTED_HOSTS = ["*"]
-    ALLOW_SITE = ["*"]
-    DEBUG: bool = True
-
-
-@dataclass
 class ProdConfig(Config):
     TRUSTED_HOSTS = ["*"]
     ALLOW_SITE = ["*"]
@@ -36,7 +29,7 @@ class ProdConfig(Config):
 
 @dataclass
 class TestConfig(Config):
-    DB_URL: str = 'mysql+pymysql://root:password@noterest/noterest'
+    DB_URL: str = environ.get("TEST_DB_URL")
     TRUSTED_HOSTS = ["*"]
     ALLOW_SITE = ["*"]
     TEST_MODE: bool = True
@@ -46,5 +39,5 @@ def conf():
     """
     환경 불러오기
     """
-    config = dict(prod=ProdConfig, local=LocalConfig, test=TestConfig)
-    return config[environ.get("API_ENV", "local")]()
+    config = dict(prod=ProdConfig, test=TestConfig)
+    return config[environ.get("API_ENV", "test")]()

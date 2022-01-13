@@ -1,11 +1,11 @@
 version: "3.8"
 
 services:
-  api:
+  noterest-auth:
     container_name: noterest-auth
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.ms-auth.rule=PathPrefix(`/auth/{[a-z]+}`)"
+      - "traefik.http.routers.noterest-auth.rule=PathPrefix(`/auth/{[a-z]+}`)"
     build: 
       context: .
     ports:
@@ -13,7 +13,9 @@ services:
     volumes:
       - ./app:/app
     env_file:
-      - ./app/.env
+      - .env
     command: >
       bash -c "
       uvicorn app.main:app --reload-dir ./app --host 0.0.0.0 --port 8000 --debug "
+
+    
