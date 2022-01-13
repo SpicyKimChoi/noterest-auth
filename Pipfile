@@ -9,6 +9,8 @@ uvicorn = {extras = ["standard"], version = "*"}
 pymysql = "*"
 sqlalchemy = "*"
 gunicorn = "*"
+bcrypt = "*"
+pyjwt = "*"
 
 [dev-packages]
 
