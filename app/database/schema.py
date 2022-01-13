@@ -118,3 +118,48 @@ class Users(Base):
         if not session:
             sess.close()
         return result
+
+
+    @classmethod
+    def filter(cls, session: Session = None, **kwargs):
+        """
+        Simply get a Row
+        :param session:
+        :param kwargs:
+        :return:
+        """
+        cond = []
+        for key, val in kwargs.items():
+            key = key.split("__")
+            if len(key) > 2:
+                raise Exception("No 2 more dunders")
+            col = getattr(cls, key[0])
+            if len(key) == 1: cond.append((col == val))
+            elif len(key) == 2 and key[1] == 'gt': cond.append((col > val))
+            elif len(key) == 2 and key[1] == 'gte': cond.append((col >= val))
+            elif len(key) == 2 and key[1] == 'lt': cond.append((col < val))
+            elif len(key) == 2 and key[1] == 'lte': cond.append((col <= val))
+            elif len(key) == 2 and key[1] == 'in': cond.append((col.in_(val)))
+        obj = cls()
+        if session:
+            obj._session = session
+            obj.served = True
+        else:
+            obj._session = next(db.session())
+            obj.served = False
+        query = obj._session.query(cls)
+        query = query.filter(*cond)
+        obj._q = query
+        return obj
+
+
+    def update(self, auto_commit: bool = False, **kwargs):
+        qs = self._q.update(kwargs)
+        ret = None
+
+        self._session.flush()
+        if qs > 0 :
+            ret = self._q.first()
+        if auto_commit:
+            self._session.commit()
+        return ret

@@ -10,14 +10,20 @@ class UserLogin(BaseModel):
     email: str = None
     pw: str = None
 
+
 class Token(BaseModel):
     Authorization: str = None
+
+
+class UserModify(BaseModel):
+    nickname: str = None
+    phone_number: str = None
 
 
 class UserToken(BaseModel):
     id: int
     email: str = None
-    name: str = None
+    nickname: str = None
     phone_number: str = None
     profile_img: str = None
 
@@ -28,7 +34,7 @@ class UserToken(BaseModel):
 class UserMe(BaseModel):
     id: int
     email: str = None
-    name: str = None
+    nickname: str = None
     phone_number: str = None
     profile_img: str = None
 
