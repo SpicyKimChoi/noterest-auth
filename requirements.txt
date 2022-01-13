@@ -9,29 +9,42 @@
 alembic==1.7.5
 anyio==3.5.0; python_full_version >= '3.6.2'
 asgiref==3.4.1; python_version >= '3.6'
+attrs==21.4.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
 bcrypt==3.2.0
+certifi==2021.10.8
 cffi==1.15.0
+charset-normalizer==2.0.10; python_version >= '3'
 click==8.0.3; python_version >= '3.6'
 fastapi==0.71.0
 greenlet==1.1.2; python_version >= '3' and platform_machine == 'aarch64' or (platform_machine == 'ppc64le' or (platform_machine == 'x86_64' or (platform_machine == 'amd64' or (platform_machine == 'AMD64' or (platform_machine == 'win32' or platform_machine == 'WIN32')))))
 gunicorn==20.1.0
 h11==0.12.0; python_version >= '3.6'
 httptools==0.3.0
-idna==3.3; python_version >= '3.5'
+idna==3.3; python_version >= '3'
+iniconfig==1.1.1
 mako==1.1.6; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
 markupsafe==2.0.1; python_version >= '3.6'
+packaging==21.3; python_version >= '3.6'
+pluggy==1.0.0; python_version >= '3.6'
+py==1.11.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
 pycparser==2.21
 pydantic==1.9.0; python_full_version >= '3.6.1'
 pyjwt==2.3.0
 pymysql==1.0.2
-python-dotenv==0.19.2
+pyparsing==3.0.6; python_version >= '3.6'
+pytest-dotenv==0.5.2
+pytest==6.2.5
+python-dotenv==0.19.2; python_version >= '3.5'
 pyyaml==6.0
+requests==2.27.1
 setuptools==60.5.0; python_version >= '3.7'
 six==1.16.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
 sniffio==1.2.0; python_version >= '3.5'
 sqlalchemy==1.4.29
 starlette==0.17.1; python_version >= '3.6'
+toml==0.10.2; python_version >= '2.6' and python_version not in '3.0, 3.1, 3.2, 3.3'
 typing-extensions==4.0.1; python_version >= '3.6'
+urllib3==1.26.8; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_version < '4'
 uvicorn[standard]==0.16.0
 uvloop==0.16.0
 watchgod==0.7

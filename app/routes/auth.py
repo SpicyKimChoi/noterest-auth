@@ -19,16 +19,20 @@ async def register(reg_info: UserRegister, session: Session = Depends(db.session
     """
     `회원가입 API`
     """
-    is_exist = await is_email_exist(reg_info.email)
+    is_e_exist = await is_email_exist(reg_info.email)
+    is_n_exist = await is_nick_exist(reg_info.nickname)
 
     if not reg_info.email or not reg_info.pw or not reg_info.nickname:
         return JSONResponse(status_code=400, content=dict(msg="Email and PW, Nickname must be provided'"))
 
-    if is_exist:
+    if is_e_exist:
         return JSONResponse(status_code=400, content=dict(msg="EMAIL_EXISTS"))
+    
+    if is_n_exist:
+        return JSONResponse(status_code=400, content=dict(msg="NICK_EXISTS"))
 
     hash_pw = bcrypt.hashpw(reg_info.pw.encode("utf-8"), bcrypt.gensalt())
-    new_user = Users.create(session, auto_commit=True, pw=hash_pw, email=reg_info.email, nickname=reg_info.nickname)
+    new_user = Users.create(session, auto_commit=True, pw=hash_pw.decode('utf-8'), email=reg_info.email, nickname=reg_info.nickname)
     token = dict(Authorization=f"Bearer {create_access_token(data=UserToken.from_orm(new_user).dict(exclude={'pw'}),)}")
     
     return token
@@ -57,6 +61,13 @@ async def login(user_info: UserLogin):
 async def is_email_exist(email: str):
     get_email = Users.get(email=email)
     if get_email:
+        return True
+    return False
+
+
+async def is_nick_exist(nick: str):
+    get_nick = Users.get(nickname=nick)
+    if get_nick:
         return True
     return False
 
