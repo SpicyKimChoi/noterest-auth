@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  noterest-auth:
+    container_name: noterest-auth
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.noterest-auth.rule=PathPrefix(`/auth/{[a-z]+}`)"
+    build: 
+      context: .
+    ports:
+      - 8000:8000
+    volumes:
+      - ./app:/app
+    env_file:
+      - .env
+    command: >
+      bash -c "
+      uvicorn app.main:app --reload-dir ./app --host 0.0.0.0 --port 8000 --debug "
+
+    
