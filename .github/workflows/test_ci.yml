@@ -49,5 +49,5 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
 
         run: |
-          pytest
+          python3 -m pytest
 
