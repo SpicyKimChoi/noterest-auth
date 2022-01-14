@@ -62,4 +62,25 @@ def test_put_me_with_exist_nick(client):
 
     assert res.status_code == 400
     assert 'NICK_EXISTS' == res_body["msg"]
+
+
+def test_put_profile_img(client):
+    user = dict(email="spicykimchoi@test.com", pw="123", nickname='매운김치')
+    regi_res = client.post("api/auth/register", json=user)
+    regi_res_body = regi_res.json()
+    token = regi_res_body["Authorization"]
+    
+    with open('image.png', 'rb') as f:
+        print(f)
+        res = client.put("api/user/update-profile", 
+            headers={"Authorization": token}, 
+            files = {"file_obj":("image.png", f, "image/png")})
+    res_body = res.json()
+    
+    db_user = Users.get(email=user['email'])
+    access_token = create_access_token(data=UserToken.from_orm(db_user).dict(exclude={'pw'}),)
+    assert res.status_code == 200
+    assert db_user.profile_img is not None
+    assert token != f"Bearer {access_token}"
+    assert res_body["Authorization"] == f"Bearer {access_token}"
     
